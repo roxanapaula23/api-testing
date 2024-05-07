@@ -79,4 +79,23 @@ public class UserStepsDefinition {
         Response response = HttpManager.post("/v2/user/createWithArray", users);
         HttpManager.setResponse(response);
     }
+
+    @When("I send a GET request to login")
+    public void iSendAGETRequestToLogin() throws IOException {
+        String json = new String(Files.readAllBytes(Paths.get("src/test/resources/data/users.json")));
+        List<UserModel> users = objectMapper.readValue(json, new TypeReference<>() {});
+        String username = users.get(0).getUsername();
+        String password = users.get(0).getPassword();
+
+        String url = "/v2/user/login?username=" + username + "&password=" + password;
+        Response response = HttpManager.get(url);
+        HttpManager.setResponse(response);
+    }
+
+    @And("I check the response body contains a valid session message")
+    public void iCheckTheResponseBodyContainsAValidSessionMessage() {
+        Response response = HttpManager.getResponse();
+        String message = response.getBody().jsonPath().getString("message");
+        Assert.assertTrue("Expected message to start with 'logged in user session:', but was: " + message, message.startsWith("logged in user session:"));
+    }
 }

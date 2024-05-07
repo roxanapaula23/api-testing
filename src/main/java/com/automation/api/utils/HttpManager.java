@@ -15,6 +15,14 @@ public class HttpManager {
         HttpManager.response = response;
     }
 
+    public static Response get(String path) {
+        String url = RestAssured.baseURI + path;
+
+        return RestAssured.given()
+                .contentType("application/json")
+                .get(url);
+    }
+
     public static Response post(String path, Object requestBody) {
         String url = RestAssured.baseURI + path;
 
