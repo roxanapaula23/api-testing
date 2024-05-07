@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "username": "anapop",
+    "firstName": "Ana",
+    "lastName": "Pop",
+    "email": "anapop@yopmail.com",
+    "password": "P@ss123!",
+    "phone": "07435465331",
+    "userStatus": 1
+  },
+  {
+    "id": 2,
+    "username": "paulteru",
+    "firstName": "Paul",
+    "lastName": "Teru",
+    "email": "paulteru@yopmail.com",
+    "password": "P@ss123242!",
+    "phone": "0740122421",
+    "userStatus": 2
+  }
+]

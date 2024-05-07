@@ -2,6 +2,7 @@ package com.automation.api.steps;
 
 import com.automation.api.model.UserModel;
 import com.automation.api.utils.HttpManager;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -16,6 +17,7 @@ import org.junit.runner.Request;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static com.automation.api.utils.HttpManager.createRequest;
 import static io.restassured.RestAssured.baseURI;
@@ -49,6 +51,7 @@ public class UserStepsDefinition {
 
 
     }
+
     @And("I check the response body is valid")
     public void iCheckTheResponseBodyIsValid() {
         Response response = HttpManager.getResponse();
@@ -67,5 +70,13 @@ public class UserStepsDefinition {
     public void iCheckIfTheResponseMessageContains(String message) {
         Response response = HttpManager.getResponse();
         Assert.assertTrue(response.getBody().asString().contains(message));
+    }
+
+    @When("I send a POST request with a list of users")
+    public void iSendAPOSTRequestWithAListOfUsers() throws IOException {
+        String json = new String(Files.readAllBytes(Paths.get("src/test/resources/data/users.json")));
+        List<UserModel> users = objectMapper.readValue(json, new TypeReference<>() {});
+        Response response = HttpManager.post("/v2/user/createWithArray", users);
+        HttpManager.setResponse(response);
     }
 }
