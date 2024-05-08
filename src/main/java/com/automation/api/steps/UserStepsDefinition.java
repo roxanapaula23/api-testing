@@ -112,4 +112,16 @@ public class UserStepsDefinition {
         String message = response.getBody().jsonPath().getString("message");
         Assert.assertEquals("Expected message to be 'ok', but was: " + message, "ok", message);
     }
+
+    @When("I send a PUT request to update user data")
+    public void iSendAPUTRequestToUpdateUserData() throws IOException {
+        String json = new String(Files.readAllBytes(Paths.get("src/test/resources/data/updatedUser.json")));
+        UserModel userToUpdate = objectMapper.readValue(json, UserModel.class);
+
+        RequestSpecification request = createRequest();
+        request.body(userToUpdate);
+
+        Response response = request.put("/v2/user/" + userToUpdate.getUsername());
+        HttpManager.setResponse(response);
+    }
 }
