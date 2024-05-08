@@ -98,4 +98,18 @@ public class UserStepsDefinition {
         String message = response.getBody().jsonPath().getString("message");
         Assert.assertTrue("Expected message to start with 'logged in user session:', but was: " + message, message.startsWith("logged in user session:"));
     }
+
+    @When("I send a GET request to logout")
+    public void iSendAGETRequestToLogout() {
+        String url = "/v2/user/logout";
+        Response response = HttpManager.get(url);
+        HttpManager.setResponse(response);
+    }
+
+    @And("I check the response body contains \"ok\" message")
+    public void iCheckTheResponseBodyContainsOkMessage() {
+        Response response = HttpManager.getResponse();
+        String message = response.getBody().jsonPath().getString("message");
+        Assert.assertEquals("Expected message to be 'ok', but was: " + message, "ok", message);
+    }
 }
