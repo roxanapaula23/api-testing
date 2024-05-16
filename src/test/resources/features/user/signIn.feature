@@ -1,7 +1,7 @@
 Feature: Logging the user into the system
 
   Scenario: Successful login with valid credentials
-    Given The service is up
-    When I send a GET request to login
-    Then I have 200 status code
-    And I check the response body contains a valid session message
+    Given The system is operational
+    When I provide the login details of a user
+    Then The system responds with a 'OK' status code
+    And The response message contains a valid session message

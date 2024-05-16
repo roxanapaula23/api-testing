@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/features",
-        glue = {"com.automation.api.steps", "com.automation.api.testing.hooks"}
+        glue = {"com.automation.api.steps", "com.automation.api.hooks"}
 )
 public class CucumberTestRunner {
 }

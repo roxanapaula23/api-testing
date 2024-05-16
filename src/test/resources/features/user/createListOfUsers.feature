@@ -1,7 +1,8 @@
-Feature: List of users with array
+Feature: List of users creation
 
-  Scenario: Create multiple users using array
-    Given The service is up
-    When I send a POST request with a list of users
-    Then I have 200 status code
-    And I check the response body is valid
+  Scenario: Create multiple users
+    Given The system is operational
+    When A list of users is registered in the system
+    Then The system responds with a 'OK' status code
+    And The response body confirms user creation
+
