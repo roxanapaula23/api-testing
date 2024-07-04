@@ -2,7 +2,7 @@ package com.automation.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserModel {
+public class User {
     @JsonProperty("id")
     private int id;
 

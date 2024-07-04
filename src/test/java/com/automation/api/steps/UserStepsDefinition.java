@@ -1,6 +1,6 @@
 package com.automation.api.steps;
 
-import com.automation.api.model.UserModel;
+import com.automation.api.model.User;
 import com.automation.api.utils.HttpManager;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,7 +35,7 @@ public class UserStepsDefinition {
     @Given("A list of users is registered in the system")
     public void aListOfUsersIsRegisteredInTheSystem() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("src/test/resources/data/users.json")));
-        List<UserModel> users = objectMapper.readValue(json, new TypeReference<>() {
+        List<User> users = objectMapper.readValue(json, new TypeReference<>() {
         });
         Response response = HttpManager.post("/v2/user/createWithArray", users);
         HttpManager.setResponse(response);
@@ -44,7 +44,7 @@ public class UserStepsDefinition {
     @When("I request information for a specific username")
     public void iRequestInformationForASpecificUsername() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("src/test/resources/data/users.json")));
-        List<UserModel> users = objectMapper.readValue(json, new TypeReference<>() {
+        List<User> users = objectMapper.readValue(json, new TypeReference<>() {
         });
         String username = users.get(1).getUsername();
         Response response = HttpManager.get("/v2/user/" + username);
@@ -74,7 +74,7 @@ public class UserStepsDefinition {
     @When("I submit valid credentials for registration")
     public void iSubmitValidCredentialsForRegistration() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("src/test/resources/data/user.json")));
-        UserModel user = objectMapper.readValue(json, UserModel.class);
+        User user = objectMapper.readValue(json, User.class);
 
         RequestSpecification request = createRequest();
         request.body(user);
@@ -98,7 +98,7 @@ public class UserStepsDefinition {
     @And("The information matches the user details")
     public void theInformationMatchesTheUserDetails() {
         Response response = HttpManager.getResponse();
-        UserModel responseUser = response.getBody().as(UserModel.class);
+        User responseUser = response.getBody().as(User.class);
 
         Assert.assertEquals("Expected id to be 2", 2, responseUser.getId());
         Assert.assertEquals("Expected username to be paulteru", "paulteru", responseUser.getUsername());
@@ -120,7 +120,7 @@ public class UserStepsDefinition {
     @When("I provide the login details of a user")
     public void iProvideTheLoginDetailsOfAUser() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("src/test/resources/data/users.json")));
-        List<UserModel> users = objectMapper.readValue(json, new TypeReference<>() {
+        List<User> users = objectMapper.readValue(json, new TypeReference<>() {
         });
         String username = users.get(0).getUsername();
         String password = users.get(0).getPassword();
@@ -147,7 +147,7 @@ public class UserStepsDefinition {
     @When("I update the user data")
     public void iUpdateTheUserData() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("src/test/resources/data/updatedUser.json")));
-        UserModel userToUpdate = objectMapper.readValue(json, UserModel.class);
+        User userToUpdate = objectMapper.readValue(json, User.class);
 
         RequestSpecification request = createRequest();
         request.body(userToUpdate);

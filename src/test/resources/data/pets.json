@@ -1,0 +1,108 @@
+[
+  {
+    "id": 1,
+    "category": {
+      "id": 1,
+      "name": "Dogs"
+    },
+    "name": "Sophie",
+    "photoUrls": [
+      "https://dogsqueensland.org.au/Breeds/browse-all-breeds/152/Samoyed/"
+    ],
+    "tags": [
+      {
+        "id": 1,
+        "name": "playful"
+      },
+      {
+        "id": 2,
+        "name": "intelligent"
+      }
+    ],
+    "status": "available"
+  },
+  {
+    "id": 2,
+    "category": {
+      "id": 2,
+      "name": " British Shorthair Cats"
+    },
+    "name": "Bella",
+    "photoUrls": [
+      "https://www.royalcanin.com/uk/cats/breeds/british-shorthair"
+    ],
+    "tags": [
+      {
+        "id": 1,
+        "name": "loyal"
+      },
+      {
+        "id": 2,
+        "name": "independent spirit"
+      }
+    ],
+    "status": "sold"
+  },
+  {
+    "id": 3,
+    "category": {
+      "id": 3,
+      "name": "Rabbits"
+    },
+    "name": "Bugs",
+    "photoUrls": [
+      "https://agriculture.vic.gov.au/livestock-and-animals/animal-welfare-victoria/other-pets/rabbits/owning-a-rabbit"
+    ],
+    "tags": [
+      {
+        "id": 1,
+        "name": "playful"
+      },
+      {
+        "id": 2,
+        "name": "inquisitive"
+      }
+    ],
+    "status": "pending"
+  },
+  {
+    "id": 4,
+    "category": {
+      "id": 4,
+      "name": "Hamsters"
+    },
+    "name": "Polly",
+    "photoUrls": [
+      "https://woodgreen.org.uk/pet-advice/hamster/introduction-to-hamsters"
+    ],
+    "tags": [
+      {
+        "id": 1,
+        "name": "adorable"
+      },
+      {
+        "id": 2,
+        "name": "mini bear"
+      }
+    ],
+    "status": "available"
+  },
+  {
+    "id": 5,
+    "category": {
+      "id": 5,
+      "name": "Guinea pigs"
+    },
+    "name": "Daisy",
+    "photoUrls": [
+      "https://www.humanerescuealliance.org/blog/posts/everything-you-need-to-know-about-guinea-pigs"
+    ],
+    "tags": [
+      {
+        "id": 1,
+        "name": "gentle"
+      }
+    ],
+    "status": "pending"
+  }
+]
