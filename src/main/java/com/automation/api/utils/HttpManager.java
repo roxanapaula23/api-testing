@@ -45,4 +45,10 @@ public class HttpManager {
         request.header("Content-Type", "application/json");
         return request;
     }
+
+    public static RequestSpecification createFormForUpdateDetailsRequest() {
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/x-www-form-urlencoded");
+        return request;
+    }
 }

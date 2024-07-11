@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static com.automation.api.utils.HttpManager.createRequest;
+import static com.automation.api.utils.HttpManager.*;
 
 public class PetStepsDefinition {
 
@@ -50,5 +50,27 @@ public class PetStepsDefinition {
         Assert.assertEquals("Expected pet tag ID", 1, pet.getTags().get(0).getId());
         Assert.assertEquals("Expected pet tag name", "playful", pet.getTags().get(0).getName());
         Assert.assertEquals("Expected pet photo URL", "https://dogsqueensland.org.au/Breeds/browse-all-breeds/152/Samoyed/", pet.getPhotoUrls().get(0));
+    }
+
+    @When("I submit a request to update the details of the pet")
+    public void iSubmitARequestToUpdateTheDetailsOfThePet() {
+        RequestSpecification request = createFormForUpdateDetailsRequest();
+        request.formParam("name", "Bella");
+        request.formParam("status", "sold");
+
+        Response response = request.post("v2/pet/1");
+        HttpManager.setResponse(response);
+    }
+
+    @When("I submit a request to update the pet details with an invalid ID")
+    public void iSubmitARequestToUpdateThePetDetailsWithAnInvalidID() {
+        int invalidPetId = -1;
+
+        RequestSpecification request = createFormForUpdateDetailsRequest();
+        request.formParam("name", "Bella");
+        request.formParam("status", "sold");
+
+        Response response = request.post("v2/pet/" + invalidPetId);
+        HttpManager.setResponse(response);
     }
 }
