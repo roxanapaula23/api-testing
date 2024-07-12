@@ -51,4 +51,10 @@ public class HttpManager {
         request.header("Content-Type", "application/x-www-form-urlencoded");
         return request;
     }
+
+    public static RequestSpecification createFormRequest() {
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "multipart/form-data");
+        return request;
+    }
 }

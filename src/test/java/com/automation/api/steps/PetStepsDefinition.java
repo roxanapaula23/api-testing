@@ -10,6 +10,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -72,5 +73,33 @@ public class PetStepsDefinition {
 
         Response response = request.post("v2/pet/" + invalidPetId);
         HttpManager.setResponse(response);
+    }
+
+    @When("I submit a request to upload an image for a pet")
+    public void iSubmitARequestToUploadAnImageForAPet()  throws IOException {
+        String json = new String(Files.readAllBytes(Paths.get("src/test/resources/data/pets.json")));
+        List<Pet> pets = objectMapper.readValue(json, new TypeReference<>() {
+        });
+        Pet pet = pets.get(0);
+        String petId = pet.getId();
+
+        String additionalMetadata = "image";
+
+        File file = new File("src/test/resources/images/samoyed.jpg");
+
+        RequestSpecification request = createFormRequest();
+        request.multiPart("file", file);
+        request.formParam("additionalMetadata", additionalMetadata);
+
+        Response response = request.post("/v2/pet/" + petId + "/uploadImage");
+        HttpManager.setResponse(response);
+    }
+
+    @And("The response body should contain a valid confirmation message")
+    public void theResponseBodyShouldContainAValidConfirmationMessage() {
+        String expectedMessage = "additionalMetadata: image[\n]File uploaded to ./samoyed.jpg, 58489 bytes";
+        Response response = HttpManager.getResponse();
+        String actualMessage = response.getBody().jsonPath().getString("message");
+        Assert.assertEquals("Expected message does not match the actual message", expectedMessage, actualMessage);
     }
 }
