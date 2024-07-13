@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
@@ -100,6 +101,43 @@ public class PetStepsDefinition {
         String expectedMessage = "additionalMetadata: image[\n]File uploaded to ./samoyed.jpg, 58489 bytes";
         Response response = HttpManager.getResponse();
         String actualMessage = response.getBody().jsonPath().getString("message");
+        Assert.assertEquals("Expected message does not match the actual message", expectedMessage, actualMessage);
+    }
+
+    @When("I submit a request to delete the pet with a valid ID")
+    public void iSubmitARequestToDeleteThePetWithAValidID() {
+        Response response = HttpManager.getResponse();
+        String petId = response.getBody().jsonPath().getString("id");
+
+        RequestSpecification request = createRequest();
+
+        response = request.delete("/v2/pet/" + petId);
+        HttpManager.setResponse(response);
+    }
+
+    @And("The response body includes a confirmation message")
+    public void theResponseBodyIncludesAConfirmationMessage() {
+        Response response = HttpManager.getResponse();
+        String actualMessage = response.getBody().jsonPath().getString("message");
+        Assert.assertEquals("Expected message does not match the actual message", "1195", actualMessage);
+    }
+
+    @When("I submit a request to delete the pet with an invalid ID")
+    public void iSubmitARequestToDeleteThePetWithAnInvalidID() {
+        String invalidPetId = "pet1";
+
+        RequestSpecification request = RestAssured.given();
+        request.header("Accept", "application/json");
+
+        Response response = request.delete("/v2/pet/" + invalidPetId);
+        HttpManager.setResponse(response);
+    }
+
+    @And("The response body includes an error message")
+    public void theResponseBodyIncludesAnErrorMessage() {
+        Response response = HttpManager.getResponse();
+        String actualMessage = response.getBody().jsonPath().getString("message");
+        String expectedMessage = "java.lang.NumberFormatException: For input string: \"pet1\"";
         Assert.assertEquals("Expected message does not match the actual message", expectedMessage, actualMessage);
     }
 }
