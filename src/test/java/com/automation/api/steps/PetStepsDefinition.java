@@ -98,7 +98,7 @@ public class PetStepsDefinition {
 
     @And("The response body should contain a valid confirmation message")
     public void theResponseBodyShouldContainAValidConfirmationMessage() {
-        String expectedMessage = "additionalMetadata: image[\n]File uploaded to ./samoyed.jpg, 58489 bytes";
+        String expectedMessage = "additionalMetadata: image\nFile uploaded to ./samoyed.jpg, 58489 bytes";
         Response response = HttpManager.getResponse();
         String actualMessage = response.getBody().jsonPath().getString("message");
         Assert.assertEquals("Expected message does not match the actual message", expectedMessage, actualMessage);
